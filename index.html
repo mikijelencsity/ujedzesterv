@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0b0d">
+<title>Edzésterv – PPL + Upper/Lower</title>
+<style>
+:root{--bg:#0b0b0d;--card:#16161a;--line:#26262c;--tx:#f2f2f4;--mut:#9a9aa4;--acc:#ff4d2e;--ok:#2ecc71}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:40px}
+header{padding:20px 16px 8px}
+h1{margin:0;font-size:22px;letter-spacing:.3px}
+.sub{color:var(--mut);font-size:14px;margin-top:2px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:600}
+nav button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+main{padding:16px;max-width:720px;margin:0 auto}
+.tag{display:inline-block;background:#2a1511;color:var(--acc);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700;margin-right:6px}
+h2{margin:4px 0 4px;font-size:21px}
+.meta{color:var(--mut);font-size:14px;margin-bottom:14px}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.ex.done{border-color:var(--ok);opacity:.7}
+.top{display:flex;gap:12px;align-items:flex-start}
+.top input[type=checkbox]{width:26px;height:26px;accent-color:var(--ok);flex:0 0 auto;margin-top:2px}
+.nm{font-weight:700;font-size:17px}
+.sc{color:var(--acc);font-weight:700;margin-top:2px}
+.pill{display:inline-block;color:var(--mut);font-size:13px;margin-right:10px}
+.note{color:var(--mut);font-size:14px;margin-top:8px}
+.log{display:flex;gap:8px;margin-top:10px}
+.log input[type=text]{flex:1;background:#0f0f12;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:9px;font-size:15px;min-width:0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.box h3{margin:0 0 8px;font-size:16px}
+.box ul{margin:0;padding-left:18px}
+.box li{margin:5px 0}
+.reset{margin-top:8px;background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:8px 12px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mut);font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔥 Edzésterv – 5 nap / hét</h1>
+  <div class="sub">Push · Pull · Láb · Upper · Lower &nbsp;|&nbsp; 6 hetes ciklus</div>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+
+<script>
+const DAYS = [
+{id:"info",short:"ℹ️ Szabályok"},
+{id:"push",short:"1 · Push",title:"PUSH – nehéz",tag:"Mell · Váll · Tricepsz",time:"~75 perc",
+ ex:[
+ ["Fekvenyomás rúddal","4 × 5–7","2–3 p","Top set + 3 back-off. 3 mp ereszkedés, mellkasról ne pattintsd."],
+ ["Ferde pados súlyzós nyomás","3 × 8–10","2 p","Mély nyújtás alul, lapocka hátul."],
+ ["Ülő súlyzós vállnyomás","3 × 8–10","2 p","Ne feszítsd ki teljesen felül, tartsd a feszültséget."],
+ ["Kábeles oldalemelés","4 × 12–15","60–90 mp","Utolsó széria: drop set (−30%, bukásig)."],
+ ["Pec deck / kábeles tárogatás","3 × 12–15","90 mp","Alul 1 mp megtartás nyújtva."],
+ ["Tricepsz nyújtás fej fölött (kábel)","3 × 10–12","90 mp","Nyújtott pozíció a lényeg."],
+ ["Tricepsz lenyomás kötéllel","2 × AMRAP","60 mp","Drop set: 8 + 8 + bukásig."]
+ ]},
+{id:"pull",short:"2 · Pull",title:"PULL – nehéz",tag:"Hát · Hátsó váll · Bicepsz",time:"~75 perc",
+ ex:[
+ ["Súlyozott húzódzkodás","4 × 5–7","2–3 p","Teljes nyújtás alul, mellkas a rúdhoz."],
+ ["Döntött törzsű evezés (rúd/súlyzó)","4 × 6–8","2 p","1 mp megtartás felül, 3 mp ereszkedés."],
+ ["Egykezes súlyzós evezés, mellkas-támasztott","3 × 10–12 / oldal","90 mp","Lapocka engedd előre alul."],
+ ["Lat pulldown, semleges fogás","3 × 10–12","90 mp","Utolsó ism.: 4 mp felengedés."],
+ ["Straight-arm pulldown","3 × 12–15","60 mp","Tiszta lat-izolálás."],
+ ["Face pull","3 × 15–20","60 mp","Hátsó váll, külső rotáció."],
+ ["Incline súlyzós curl","3 × 10–12","90 mp","3 mp ereszkedés, nyújtott pozíció."],
+ ["Kalapács curl","3 × 10","60 mp","Brachialis + alkar."],
+ ["Kábeles curl drop set","2 × 8+8+AMRAP","—","−25–30% súly minden drop-nál."],
+ ["Dead hang","2 × max idő","—","Alkar/markolat."]
+ ]},
+{id:"leg",short:"3 · Láb",title:"LÁB – quad fókusz",tag:"Comb · Vádli · Has",time:"~80 perc",
+ ex:[
+ ["Guggolás (rúd)","4 × 6–8","3 p","Mély, kontrollált. Utolsó széria 1 RIR."],
+ ["Hack squat / lábprés","3 × 10–12","2 min","Térd előre, mély tartomány."],
+ ["Bolgár kitörés","3 × 8–10 / láb","90 mp","Súlyzóval. Itt jön a legnagyobb izomláz."],
+ ["Lábnyújtás","3 × 12–15","90 mp","Utolsó széria drop set."],
+ ["Fekvő lábhajlítás","3 × 10–12","90 mp","Lassú negatív."],
+ ["Álló vádliemelés","4 × 10–15","60 mp","Alul 2 mp nyújtás."],
+ ["Lógó lábemelés","3 × 10–15","60 mp","Medence felfelé."]
+ ]},
+{id:"upper",short:"4 · Upper",title:"UPPER – hipertrófia",tag:"Hát + Mell + Váll + Kar",time:"~75 perc",
+ ex:[
+ ["Húzódzkodás széles fogás","3 × 8–10","2 p","Testsúllyal vagy könnyebb súllyal, tiszta technika."],
+ ["Sík súlyzós nyomás","3 × 8–10","2 p","Mély nyújtás."],
+ ["Kábeles ülő evezés","3 × 10–12","90 mp","Megtartás 1 mp."],
+ ["Vállnyomás gépen / súlyzóval","3 × 10–12","90 mp",""],
+ ["Oldalemelés","3 × 15–20","60 mp","Magas ismétlés, égő érzés."],
+ ["Face pull","3 × 15–20","60 mp",""],
+ ["Szuperszet: EZ curl + koponyazúzó","3 × 10–12","90 mp","Nincs pihenő a két mozdulat között."],
+ ["Szuperszet: kalapács curl + tricepsz lenyomás","3 × 12","60 mp","Pumpa-finish."]
+ ]},
+{id:"lower",short:"5 · Lower",title:"LOWER – hátsó lánc",tag:"Hamstring · Farizom · Vádli",time:"~75 perc",
+ ex:[
+ ["Román felhúzás","4 × 6–8","2–3 p","Csípőből hajlás, nyújtás a hamstringben."],
+ ["Hip thrust","3 × 8–10","2 p","2 mp megtartás felül."],
+ ["Lábprés magas lábtartással","3 × 12–15","2 p","Farizom + hamstring."],
+ ["Ülő lábhajlítás","3 × 10–12","90 mp","Nyújtott pozíció, 3 mp negatív."],
+ ["Gyaloglós kitörés","3 × 12 / láb","90 mp","Súlyzóval."],
+ ["Ülő vádliemelés","4 × 12–15","60 mp","Soleus, 2 mp alul."],
+ ["Kábeles hasprés","3 × 12–15","60 mp","Gerinc görbítése."]
+ ]}
+];
+const INFO = `
+<div class="box"><h3>📅 Heti beosztás</h3>
+<table><tr><th>Nap</th><th>Edzés</th></tr>
+<tr><td>Hétfő</td><td>Push (nehéz)</td></tr>
+<tr><td>Kedd</td><td>Pull (nehéz)</td></tr>
+<tr><td>Szerda</td><td>Láb (quad)</td></tr>
+<tr><td>Csütörtök</td><td>Pihenő</td></tr>
+<tr><td>Péntek</td><td>Upper (hipertrófia)</td></tr>
+<tr><td>Szombat</td><td>Lower (hátsó lánc)</td></tr>
+<tr><td>Vasárnap</td><td>Pihenő</td></tr></table>
+<div class="note">Az a régi PPLPP-hez képest: a lábad heti 2×-t kap (régen 1×), a felsőtested így is 2×. Ez gyorsabb fejlődés.</div></div>
+<div class="box"><h3>📈 Progresszió (dupla progresszió)</h3><ul>
+<li>Minden gyakorlatnál van egy ismétlés-tartomány (pl. 8–10).</li>
+<li>Ha <b>minden szériában</b> eléred a tartomány tetejét, legközelebb <b>+2,5 kg</b> (kis izomcsoportnál +1 kg).</li>
+<li>Írd be a súlyt a mezőbe, a telefon megjegyzi.</li></ul></div>
+<div class="box"><h3>🎯 Intenzitás</h3><ul>
+<li>Fő gyakorlatok utolsó szériája: <b>0–1 RIR</b> (nincs több ismétlésed tartalékban).</li>
+<li>Izolációk utolsó szériája: bukásig vagy drop set.</li>
+<li>Ereszkedés: <b>3 másodperc</b>, mindig.</li></ul></div>
+<div class="box"><h3>🗓️ 6 hetes ciklus</h3><ul>
+<li><b>1–2. hét:</b> tanulj, 2 RIR, a súlyokat találd meg.</li>
+<li><b>3–5. hét:</b> a legkeményebb: 0–1 RIR, +1 extra széria a fő gyakorlatokra.</li>
+<li><b>6. hét: deload.</b> Szériák felezve, súly −10%, 3 RIR. Utána új ciklus, magasabb súlyokkal.</li></ul></div>
+<div class="box"><h3>🍗 Étkezés, alvás</h3><ul>
+<li>Fehérje: <b>1,8–2,2 g / testsúlykg / nap</b>.</li>
+<li>Tömegépítéshez +300 kcal többlet, szálkásításhoz −400 kcal. Válassz egyet.</li>
+<li>Alvás: 7–9 óra, ott épül az izom.</li>
+<li>Kreatin 3–5 g / nap bizonyítottan hat.</li></ul></div>
+<button class="reset" onclick="resetAll()">🗑️ Napló törlése</button>`;
+
+const nav=document.getElementById('nav'),main=document.getElementById('main');
+const S={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+function show(id){
+  S.set('tab',id);
+  [...nav.children].forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  const d=DAYS.find(x=>x.id===id);
+  if(id==='info'){main.innerHTML=INFO;return}
+  let h=`<span class="tag">${d.tag}</span><h2>${d.title}</h2><div class="meta">${d.time} · Bemelegítés: 5 perc kardió + 2 könnyű széria az első gyakorlatra</div>`;
+  d.ex.forEach((e,i)=>{
+    const k=id+i,ck=S.get('c'+k)==='1',w=S.get('w'+k)||'';
+    h+=`<div class="ex ${ck?'done':''}"><div class="top"><input type="checkbox" ${ck?'checked':''} onchange="tick('${k}',this)"><div><div class="nm">${e[0]}</div><div class="sc">${e[1]}</div><span class="pill">⏱ ${e[2]}</span></div></div>${e[3]?`<div class="note">${e[3]}</div>`:''}<div class="log"><input type="text" placeholder="Súly / ismétlés" value="${w}" oninput="S.set('w${k}',this.value)"></div></div>`;
+  });
+  h+=`<button class="reset" onclick="clearDay('${id}')">Pipák törlése erre a napra</button>`;
+  main.innerHTML=h;window.scrollTo(0,0);
+}
+function tick(k,el){S.set('c'+k,el.checked?'1':'0');el.closest('.ex').classList.toggle('done',el.checked)}
+function clearDay(id){const d=DAYS.find(x=>x.id===id);d.ex.forEach((_,i)=>S.del('c'+id+i));show(id)}
+function resetAll(){if(confirm('Biztos törlöd az összes naplót?')){try{localStorage.clear()}catch(e){}show('info')}}
+DAYS.forEach(d=>{const b=document.createElement('button');b.textContent=d.short;b.dataset.id=d.id;b.onclick=()=>show(d.id);nav.appendChild(b)});
+show(S.get('tab')||'info');
+</script>
+</body>
+</html>
