@@ -4,44 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0b0d">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Edzésterv">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Edzésterv – PPL + Upper/Lower</title>
 <style>
-:root{--bg:#0b0b0d;--card:#16161a;--line:#26262c;--tx:#f2f2f4;--mut:#9a9aa4;--acc:#ff4d2e;--ok:#2ecc71}
+:root{--bg:#07070a;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.075);--line:rgba(255,255,255,.09);--tx:#f4f4f7;--mut:#9b9ba8;--acc:#ff4d2e;--acc2:#ff9a3d;--ok:#2ee6a6}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:40px}
-header{padding:20px 16px 8px}
-h1{margin:0;font-size:22px;letter-spacing:.3px}
-.sub{color:var(--mut);font-size:14px;margin-top:2px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
-nav button{flex:0 0 auto;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:600}
-nav button.on{background:var(--acc);border-color:var(--acc);color:#fff}
-main{padding:16px;max-width:720px;margin:0 auto}
-.tag{display:inline-block;background:#2a1511;color:var(--acc);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700;margin-right:6px}
-h2{margin:4px 0 4px;font-size:21px}
-.meta{color:var(--mut);font-size:14px;margin-bottom:14px}
-.ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-.ex.done{border-color:var(--ok);opacity:.7}
-.top{display:flex;gap:12px;align-items:flex-start}
-.top input[type=checkbox]{width:26px;height:26px;accent-color:var(--ok);flex:0 0 auto;margin-top:2px}
-.nm{font-weight:700;font-size:17px}
-.sc{color:var(--acc);font-weight:700;margin-top:2px}
-.pill{display:inline-block;color:var(--mut);font-size:13px;margin-right:10px}
-.note{color:var(--mut);font-size:14px;margin-top:8px}
-.log{display:flex;gap:8px;margin-top:10px}
-.log input[type=text]{flex:1;background:#0f0f12;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:9px;font-size:15px;min-width:0}
-.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
-.box h3{margin:0 0 8px;font-size:16px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:60px;min-height:100vh;
+ background-image:radial-gradient(900px 500px at 85% -10%,color-mix(in srgb,var(--acc) 28%,transparent),transparent 60%),radial-gradient(700px 500px at -10% 30%,color-mix(in srgb,var(--acc2) 14%,transparent),transparent 60%);background-attachment:fixed;transition:background .4s}
+header{padding:26px 18px 10px;max-width:720px;margin:0 auto}
+h1{margin:0;font-size:30px;line-height:1.1;font-weight:900;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,var(--acc2) 70%,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:14px;margin-top:6px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 70%,transparent);scrollbar-width:none;backdrop-filter:blur(10px)}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+nav button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#111;box-shadow:0 6px 24px -6px var(--acc);transform:translateY(-1px)}
+main{padding:8px 16px;max-width:720px;margin:0 auto;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--acc) 22%,transparent),rgba(255,255,255,.03) 60%);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--acc) 45%,transparent),transparent 70%)}
+.tag{display:inline-block;background:rgba(0,0,0,.35);color:var(--acc2);border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}
+h2{margin:10px 0 4px;font-size:28px;line-height:1.1;font-weight:900;letter-spacing:-.4px;position:relative;z-index:1}
+.meta{color:var(--mut);font-size:13.5px;position:relative;z-index:1}
+.prog{margin-top:16px;position:relative;z-index:1}
+.bar{height:9px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--acc2));box-shadow:0 0 14px var(--acc);transition:width .4s}
+.pl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut);margin-top:6px;font-weight:600}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px;position:relative;transition:.25s;backdrop-filter:blur(6px)}
+.ex::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(var(--acc),var(--acc2))}
+.ex.done{background:rgba(46,230,166,.07);border-color:rgba(46,230,166,.35)}
+.ex.done::before{background:var(--ok)}
+.ex.done .nm{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.35);opacity:.6}
+.top{display:flex;gap:14px;align-items:center}
+.n{flex:0 0 auto;font-size:30px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--acc);min-width:34px;text-align:center}
+.ex.done .n{-webkit-text-stroke-color:var(--ok)}
+.mid{flex:1;min-width:0}
+.nm{font-weight:800;font-size:17.5px;line-height:1.25}
+.sc{display:inline-block;margin-top:6px;font-weight:900;font-size:15px;color:#111;background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:9px;padding:2px 10px}
+.pill{display:inline-block;color:var(--mut);font-size:13px;margin-left:8px;font-weight:600}
+.chk{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:34px;height:34px;border-radius:11px;border:2px solid var(--line);background:rgba(0,0,0,.3);cursor:pointer;display:grid;place-items:center;transition:.2s}
+.chk:checked{background:var(--ok);border-color:var(--ok);box-shadow:0 0 18px rgba(46,230,166,.55)}
+.chk:checked::after{content:"✓";color:#06231a;font-weight:900;font-size:20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font-size:11.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;padding:3px 9px;border-radius:7px;background:color-mix(in srgb,var(--acc) 18%,transparent);color:var(--acc2);border:1px solid color-mix(in srgb,var(--acc) 40%,transparent)}
+.note{color:#c9c9d3;font-size:14px;margin-top:10px}
+.log{margin-top:12px}
+.log input[type=text]{width:100%;background:rgba(0,0,0,.35);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:15px;outline:none;transition:.2s}
+.log input[type=text]:focus{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin-bottom:12px}
+.box h3{margin:0 0 8px;font-size:17px}
 .box ul{margin:0;padding-left:18px}
-.box li{margin:5px 0}
-.reset{margin-top:8px;background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:8px 12px;font-size:13px}
-table{width:100%;border-collapse:collapse;font-size:14px}
-td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--mut);font-weight:600}
+.box li{margin:6px 0}
+.reset{margin-top:10px;background:none;border:1px solid var(--line);color:var(--mut);border-radius:12px;padding:10px 14px;font-size:13px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mut);font-weight:700}
+.note b{color:var(--tx)}
 </style>
 </head>
 <body>
 <header>
-  <h1>🔥 Edzésterv – 5 nap / hét</h1>
+  <h1>🔥 Edzésterv<br>5 nap / hét</h1>
   <div class="sub">Push · Pull · Láb · Upper · Lower &nbsp;|&nbsp; 6 hetes ciklus</div>
 </header>
 <nav id="nav"></nav>
@@ -50,12 +79,15 @@ th{color:var(--mut);font-weight:600}
 <script>
 const DAYS = [
 {id:"info",short:"ℹ️ Szabályok"},
-{id:"push",short:"1 · Push",title:"PUSH – nehéz",tag:"Mell · Váll · Tricepsz",time:"~55 perc",
+{id:"push",short:"1 · Push",title:"PUSH – nehéz",tag:"Váll · Mell · Tricepsz",time:"~70 perc",
  ex:[
- ["Fekvenyomás rúddal","4 × 5–7","2–3 p","Top set + 3 back-off. 3 mp ereszkedés, mellkasról ne pattintsd."],
- ["Ferde pados súlyzós nyomás","3 × 8–10","2 p","Mély nyújtás alul, lapocka hátul."],
- ["Kábeles oldalemelés","4 × 12–15","60–90 mp","Utolsó széria: drop set (−30%, bukásig)."],
- ["Tricepsz nyújtás fej fölött (kábel)","4 × 10–12","90 mp","Nyújtott pozíció a lényeg. Utolsó széria: drop set."]
+ ["Ülő vállnyomás súlyzóval","4 × 6–8","2 p","Az utolsó széria után rest-pause: 15 mp pihenő, még 3–4 ismétlés."],
+ ["Kábeles oldalemelés (nehéz)","4 × 10–12","60–90 mp","Minden széria bukásig. Utolsó széria: dupla drop set."],
+ ["Oldalemelés myo-reps","1 × 15 + 5 × 3–4","15 mp","1 széria 15-ig bukásig, utána 5 mini-széria 3–4 ismétléssel, 15 mp pihenővel."],
+ ["Fekvenyomás rúddal","top set 5–7 + 3 back-off","2–3 p","Top set, aztán 3 back-off 1 RIR-ig. 3 mp ereszkedés, mellkasról ne pattintsd."],
+ ["Ferde pados súlyzós nyomás / mellrepülés","3 × 10–12","90 mp","Lassú negatív. Az utolsó ismétlés után 10 mp nyújtott tartás alul."],
+ ["Tricepsz nyújtás fej fölött (kábel)","3 × 10–12","90 mp","Nyújtott pozíció a lényeg. Utolsó széria: nyújtott tartás + drop set."],
+ ["Finisher: fekvőtámasz","2 kör bukásig","90 mp","Bukásig, 2 kör."]
  ]},
 {id:"pull",short:"2 · Pull",title:"PULL – nehéz + bicepsz",tag:"Hát · Hátsó váll · Bicepsz",time:"~65 perc",
  ex:[
@@ -67,12 +99,16 @@ const DAYS = [
  ["💪 Preacher vagy spider curl","3 × 10–12","90 mp","Bicepsz-blokk 2/3. Alul 1 mp megtartás, ne lendíts."],
  ["💪 Kalapács curl drop set","2 × 8+8+bukásig","60 mp","Bicepsz-blokk 3/3. −25–30% súly minden drop-nál."]
  ]},
-{id:"leg",short:"3 · Láb",title:"LÁB – quad fókusz",tag:"Comb · Vádli",time:"~55 perc",
+{id:"leg",short:"3 · Láb",title:"LÁB – guggolás nélkül",tag:"Comb · Combhajlító · Vádli",time:"~75 perc",
  ex:[
- ["Guggolás (rúd)","4 × 6–8","3 p","Mély, kontrollált. Utolsó széria 1 RIR."],
- ["Bolgár kitörés","3 × 8–10 / láb","90 mp","Súlyzóval. Itt jön a legnagyobb izomláz."],
- ["Fekvő lábhajlítás","3 × 10–12","90 mp","Lassú negatív. Utolsó széria drop set."],
- ["Álló vádliemelés","4 × 10–15","60 mp","Alul 2 mp nyújtás."]
+ ["Hack squat","4 × 8–10","2–3 p","3 mp ereszkedés, alul 1 mp megállás. Az utolsó után dupla drop set."],
+ ["Román felhúzás","4 × 8–10","2 p","Lassú ereszkedés, mély nyújtás a combhajlítóban."],
+ ["Lábtoló gép (magas láb)","3 × 12–15","90 mp","Magasra tett láb. Utolsó széria: rest-pause."],
+ ["Bolgár / sétáló kitörés","3 × 10 / láb","90 mp","Kontrollált, mély lépés."],
+ ["Lábfeszítő gép","3 × 12–15","60–90 mp","Utolsó széria: drop set + 10 mp tartás felül."],
+ ["Fekvő lábhajlítás","3 × 10–12","90 mp","Lassú negatív. Utolsó széria: drop set."],
+ ["Álló vádliemelés","4 × 10–12","60 mp","Nehezen. Alul 2 mp tartás."],
+ ["Ülő vádliemelés","2 × 15","60 mp","Utolsó széria: dupla drop set."]
  ]},
 {id:"upper",short:"4 · Upper",title:"UPPER – hipertrófia + bicepsz",tag:"Mell · Hát · Váll · Bicepsz",time:"~60 perc",
  ex:[
@@ -132,20 +168,25 @@ const INFO = `
 
 const nav=document.getElementById('nav'),main=document.getElementById('main');
 const S={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const COL={info:['#ff4d2e','#ff9a3d'],push:['#ff4d2e','#ff9a3d'],pull:['#3da5ff','#6df0ff'],leg:['#17d68f','#b6f24a'],upper:['#a56bff','#ff6bd6'],lower:['#ffb11f','#ff6a3d'],has:['#ff2e63','#ff8a5c']};
+const TECH=[[/rest-pause/i,'Rest-pause'],[/dupla drop/i,'Dupla drop set'],[/(?<!dupla )drop set/i,'Drop set'],[/myo/i,'Myo-reps'],[/bukásig/i,'Bukásig'],[/tartás/i,'Tartás'],[/negatív|ereszked/i,'Lassú negatív'],[/nyújt/i,'Nyújtás'],[/RIR/i,'RIR']];
+function paint(id){const c=COL[id]||COL.info,r=document.documentElement.style;r.setProperty('--acc',c[0]);r.setProperty('--acc2',c[1]);document.querySelector('meta[name=theme-color]').content=c[0]}
+function prog(id){const d=DAYS.find(x=>x.id===id);if(!d||!d.ex)return;const n=d.ex.filter((_,i)=>S.get('c'+id+i)==='1').length,t=d.ex.length;const f=document.getElementById('pf'),l=document.getElementById('pt');if(f)f.style.width=(n/t*100)+'%';if(l)l.textContent=n===t?'🔥 Kész, király vagy!':n+' / '+t+' gyakorlat kész'}
 function show(id){
-  S.set('tab',id);
+  S.set('tab',id);paint(id);
   [...nav.children].forEach(b=>b.classList.toggle('on',b.dataset.id===id));
   const d=DAYS.find(x=>x.id===id);
-  if(id==='info'){main.innerHTML=INFO;return}
-  let h=`<span class="tag">${d.tag}</span><h2>${d.title}</h2><div class="meta">${d.time} · Bemelegítés: 5 perc kardió + 2 könnyű széria az első gyakorlatra</div>`;
+  if(id==='info'){main.innerHTML=INFO;window.scrollTo(0,0);return}
+  let h=`<div class="hero"><span class="tag">${d.tag}</span><h2>${d.title}</h2><div class="meta">⏱ ${d.time} · Bemelegítés: 5 perc kardió + 2 könnyű széria az első gyakorlatra</div><div class="prog"><div class="bar"><i id="pf"></i></div><div class="pl"><span id="pt"></span><span>${d.ex.length} gyakorlat</span></div></div></div>`;
   d.ex.forEach((e,i)=>{
     const k=id+i,ck=S.get('c'+k)==='1',w=S.get('w'+k)||'';
-    h+=`<div class="ex ${ck?'done':''}"><div class="top"><input type="checkbox" ${ck?'checked':''} onchange="tick('${k}',this)"><div><div class="nm">${e[0]}</div><div class="sc">${e[1]}</div><span class="pill">⏱ ${e[2]}</span></div></div>${e[3]?`<div class="note">${e[3]}</div>`:''}<div class="log"><input type="text" placeholder="Súly / ismétlés" value="${w}" oninput="S.set('w${k}',this.value)"></div></div>`;
+    const chips=TECH.filter(t=>t[0].test(e[3]||'')).slice(0,4).map(t=>`<span class="chip">${t[1]}</span>`).join('');
+    h+=`<div class="ex ${ck?'done':''}"><div class="top"><div class="n">${i+1}</div><div class="mid"><div class="nm">${e[0]}</div><span class="sc">${e[1]}</span><span class="pill">⏱ ${e[2]}</span></div><input class="chk" type="checkbox" ${ck?'checked':''} onchange="tick('${k}',this)"></div>${chips?`<div class="chips">${chips}</div>`:''}${e[3]?`<div class="note">${e[3]}</div>`:''}<div class="log"><input type="text" placeholder="Súly / ismétlés" value="${w}" oninput="S.set('w${k}',this.value)"></div></div>`;
   });
   h+=`<button class="reset" onclick="clearDay('${id}')">Pipák törlése erre a napra</button>`;
-  main.innerHTML=h;window.scrollTo(0,0);
+  main.innerHTML=h;prog(id);window.scrollTo(0,0);
 }
-function tick(k,el){S.set('c'+k,el.checked?'1':'0');el.closest('.ex').classList.toggle('done',el.checked)}
+function tick(k,el){S.set('c'+k,el.checked?'1':'0');el.closest('.ex').classList.toggle('done',el.checked);prog(S.get('tab'))}
 function clearDay(id){const d=DAYS.find(x=>x.id===id);d.ex.forEach((_,i)=>S.del('c'+id+i));show(id)}
 function resetAll(){if(confirm('Biztos törlöd az összes naplót?')){try{localStorage.clear()}catch(e){}show('info')}}
 DAYS.forEach(d=>{const b=document.createElement('button');b.textContent=d.short;b.dataset.id=d.id;b.onclick=()=>show(d.id);nav.appendChild(b)});
