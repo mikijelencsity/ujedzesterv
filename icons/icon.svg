@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+<radialGradient id="bg" cx="50%" cy="85%" r="90%"><stop offset="0" stop-color="#5a1408"/><stop offset=".55" stop-color="#14070a"/><stop offset="1" stop-color="#07070a"/></radialGradient>
+<linearGradient id="f" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff2e1f"/><stop offset=".55" stop-color="#ff7a1a"/><stop offset="1" stop-color="#ffd23d"/></linearGradient>
+<linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f4f7"/><stop offset="1" stop-color="#8d8d9a"/></linearGradient>
+<filter id="g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<path d="M256 62c14 52 78 86 98 150 14 44 4 92-26 122-14-30-34-44-52-52 8 30-4 58-20 74-30-20-56-56-52-102-26 18-40 48-36 78-34-26-52-68-44-110 12-68 78-96 98-160z" fill="#ff5a1a" filter="url(#g)" opacity=".75"/>
+<path d="M256 62c14 52 78 86 98 150 14 44 4 92-26 122-14-30-34-44-52-52 8 30-4 58-20 74-30-20-56-56-52-102-26 18-40 48-36 78-34-26-52-68-44-110 12-68 78-96 98-160z" fill="url(#f)"/>
+<path d="M256 190c8 28 44 48 54 84 6 26-2 52-20 68-8-18-20-26-30-30 4 18-2 32-12 42-18-12-30-32-28-58-14 10-22 26-20 44-18-16-26-40-20-62 8-36 48-54 76-88z" fill="#ffe27a" opacity=".9"/>
+<g transform="translate(0 372)">
+<rect x="96" y="-10" width="320" height="20" rx="10" fill="url(#m)"/>
+<rect x="62" y="-52" width="34" height="104" rx="9" fill="url(#m)"/>
+<rect x="24" y="-34" width="34" height="68" rx="9" fill="url(#m)"/>
+<rect x="416" y="-52" width="34" height="104" rx="9" fill="url(#m)"/>
+<rect x="454" y="-34" width="34" height="68" rx="9" fill="url(#m)"/>
+</g>
+</svg>
